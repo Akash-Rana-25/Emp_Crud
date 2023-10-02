@@ -1,0 +1,192 @@
+﻿@model IEnumerable<Employee_Managment.Models.Employee>
+<div class="container">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h2 class="card-title">Employee List</h2>
+            <p>
+                <a asp-action="Create" class="btn ">Create New</a>
+                <a asp-action="ExportToExcel" class="btn  ml-2">Export to Excel</a>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu">
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="PresentDays">
+                            <i class="fas fa-check-square"></i> Present Days
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="AbsentDays">
+                            <i class="fas fa-check-square"></i> Absent Days
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="TotalDays">
+                            <i class="fas fa-check-square"></i> Total Days
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="SundayHoliday">
+                            <i class="fas fa-check-square"></i> Sunday Holiday
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="CL">
+                            <i class="fas fa-check-square"></i> CL
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="TotalPayableDays">
+                            <i class="fas fa-check-square"></i> Total Payable Days
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="PayableAmount">
+                            <i class="fas fa-check-square"></i> Payable Amount
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="ProfessionalTax">
+                            <i class="fas fa-check-square"></i> Professional Tax
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="PF">
+                            <i class="fas fa-check-square"></i> P.F@12%
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="ESIC">
+                            <i class="fas fa-check-square"></i> ESIC@0.75%
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="ExtraDeduction">
+                            <i class="fas fa-check-square"></i> Extra Deduction/Arrears
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" class="filter-checkbox" value="NetAmountPayable">
+                            <i class="fas fa-check-square"></i> Net Amount Payable
+                        </label>
+                        <!-- Add more checkboxes for other columns as needed -->
+                    </div>
+                </div>
+            </p>
+
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="employee-header">
+                            <th>Name</th>
+                            <th>Basic + DA</th>
+                            <th>Per Day</th>
+                            <th>Total Days</th>
+                            <th>Present Days</th>
+                            <th>Absent Days</th>
+                            <th>Sunday Holiday</th>
+                            <th>CL+</th>
+                            <th>Total Payable Days</th>
+                            <th>Payable Amount</th>
+                            <th>Professional Tax</th>
+                            <th>P.F@12 %</th>
+                            <th>ESIC@0.75 %</th>
+                            <th>Extra Deduction/Arrears</th>
+                            <th>Net Amount Payable</th>
+                            @*  <th></th>
+                            <th></th>
+                            <th></th> *@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="employee-row">
+                                <td class="Name">@item.Name</td>
+                                <td class="BasicAndDA">@item.BasicAndDA</td>
+                                <td class="PerDay">@item.PerDay</td>
+                                <td class="TotalDays">@item.TotalDays</td>
+                                <td class="PresentDays">@item.PresentDays</td>
+                                <td class="AbsentDays">@item.AbsentDays</td>
+                                <td class="SundayHoliday">@item.SundayHoliday</td>
+                                <td class="CL">@item.CL</td>
+                                <td class="TotalPayableDays">@item.TotalPayableDays</td>
+                                <td class="PayableAmount">@item.PayableAmount</td>
+                                <td class="ProfessionalTax">@item.ProfessionalTax</td>
+                                <td class="PF">@item.PF</td>
+                                <td class="ESIC">@item.ESIC</td>
+                                <td class="ExtraDeduction">@item.ExtraDeduction</td>
+                                <td class="NetAmountPayable">@item.NetAmountPayable</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                                </td>
+                                <td>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (TempData["Message"] != null)
+    {
+
+        <script>
+            console.log('Message:', '@TempData["Message"]');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: ' @TempData["Message"]'
+            })
+
+        </script>
+    }
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Initialize the table with all rows and headers visible
+            $('.employee-row, .employee-header').removeClass('filtered-out');
+
+            // Handle checkbox change event
+            $('.filter-checkbox').change(function () {
+                // Create an array to store the selected filter values
+                var selectedFilters = [];
+
+                // Loop through all checked checkboxes and store their values in the array
+                $('.filter-checkbox:checked').each(function () {
+                    selectedFilters.push($(this).val());
+                });
+
+                // Hide all columns initially
+                $('.employee-row td, .employee-header th').addClass('filtered-out');
+
+                // Show columns that match the selected filter values
+                $.each(selectedFilters, function (index, filterValue) {
+                    // Show columns with class equal to the selected filter value
+                    $('td.' + filterValue).removeClass('filtered-out');
+                    $('th.' + filterValue).removeClass('filtered-out');
+                });
+            });
+        });
+    </script>
+}

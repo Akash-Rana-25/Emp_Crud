@@ -1,0 +1,29 @@
+﻿<div class="modal fade" id="punchModal" tabindex="-1" role="dialog" aria-labelledby="punchModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="punchModalLabel">Punch In / Punch Out</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="punchInTime">Punch In Time:</label>
+                    <input type="time" class="form-control" id="punchInTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="punchOutTime">Punch Out Time:</label>
+                    <input type="time" class="form-control" id="punchOutTime">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="savePunch" data-create-url="@Url.Action("CreatePunch", "Employee")">Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
